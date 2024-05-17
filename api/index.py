@@ -107,7 +107,7 @@ async def read_root(request: Request):
 
 
 # Protect routers with the verify_token dependency
-app.include_router(BookRouter, prefix="/book", dependencies=[Depends(verify_token)])
+app.include_router(BookRouter, prefix="/book")
 app.include_router(
     StaticRouter,
     prefix="/static",
