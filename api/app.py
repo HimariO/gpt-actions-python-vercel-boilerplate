@@ -2,6 +2,7 @@
 from fastapi import APIRouter, Body, HTTPException
 from .model import BookResponse, BookSchema, MessageResponse, ErrorResponse
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel, Field
 
 router = APIRouter()
 
@@ -41,3 +42,14 @@ def delete_book(id: str) -> MessageResponse:
         raise HTTPException(status_code=400, detail="Invalid book ID")
     del books[id]
     return MessageResponse(message=f"Book {id} deleted successfully")
+
+
+class ImageURI(BaseModel):
+    url: str = Field(description="URL link to a JPG image file that can be download.")
+
+
+@router.get("/randimg/", response_model=ImageURI, summary="Random select and return a image.")
+def random_image():
+    # return {"image_url": "https://storage.googleapis.com/0_temp/0240.jpg"}
+    data = {"url": "https://storage.googleapis.com/0_temp/0240.jpg"}
+    return data
